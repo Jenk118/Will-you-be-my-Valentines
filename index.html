@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Be My Valentine? 💖</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .gradient-bg {
+      background: linear-gradient(180deg, #ffb6c1, #ffe4e1);
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      flex-direction: column;
+    }
+
+    .bounce {
+      animation: bounce 1.5s infinite ease-in-out;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    .grow {
+      transition: all 0.3s ease-in-out;
+    }
+
+  </style>
+</head>
+<body class="gradient-bg">
+  <h1 class="text-4xl font-bold text-[#d63384] italic mb-4">Will you be my Valentine? 💘</h1>
+  <img id="cuteImage" src="https://media.giphy.com/media/l3q2Ip7FrmPE1gY3u/giphy.gif" class="rounded-lg w-64 h-64 object-cover mb-4" alt="Cute love gif">
+
+  <div class="flex gap-4">
+    <button id="yesButton" 
+      class="yesButton bounce grow text-2xl font-bold bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg hover:bg-green-400 transition">
+      Yes 💖
+    </button>
+    <button id="noButton" 
+      class="text-2xl font-bold bg-red-500 text-white px-6 py-3 rounded-lg shadow-lg hover:bg-red-700 transition">
+      No 💔
+    </button>
+  </div>
+
+  <script type="module">
+    import confetti from 'https://cdn.skypack.dev/canvas-confetti';
+
+    const yesButton = document.getElementById('yesButton');
+    const noButton = document.getElementById('noButton');
+    const cuteImage = document.getElementById('cuteImage');
+
+    let noClickCount = 0;
+    let buttonSize = 16; // Initial font size in rem
+
+    const noMessages = [
+      "Are you sure? 🥺",
+      "Pookie please... 😢",
+      "Don't break my heart 💔",
+      "But I love you 😭",
+      "You're really doing this? 😭💀",
+      "Fine... but I’ll be sad forever 😭",
+      "Okay now you're just being mean 🥲",
+      "Pls just click yes 😡",
+      "I won't stop asking 💀",
+      "This is getting ridiculous... 😭"
+    ];
+
+    noButton.addEventListener('click', () => {
+      if (noClickCount < noMessages.length) {
+        noButton.textContent = noMessages[noClickCount];
+      } else {
+        noButton.textContent = "There's no escape 😈";
+      }
+
+      // Make Yes button bigger every No press
+      buttonSize += 3;
+      yesButton.style.fontSize = `${buttonSize}px`;
+      yesButton.style.padding = `${buttonSize / 2}px ${buttonSize}px`;
+
+      // Change image to more dramatic ones
+      const images = [
+        "https://media.giphy.com/media/26ufnwz3wDUli7GU0/giphy.gif", // Sad face
+        "https://media.giphy.com/media/3oz8xSjBmD1ZyELqW4/giphy.gif", // Puppy eyes
+        "https://media.giphy.com/media/TgmiJ4AZ3HSiIqpOj6/giphy.gif", // Crying
+        "https://media.giphy.com/media/9J7tdYltWyXIY/giphy.gif" // Dramatic heartbreak
+      ];
+      if (noClickCount < images.length) {
+        cuteImage.src = images[noClickCount];
+      }
+
+      noClickCount++;
+    });
+
+    yesButton.addEventListener('click', () => {
+      document.body.innerHTML = `
+        <div class="gradient-bg">
+          <h1 class="text-5xl font-bold text-[#d63384] italic mb-6">YAYYY! 💖</h1>
+          <img src="https://media.giphy.com/media/5GoVLqeAOo6PK/giphy.gif" class="rounded-lg w-72 h-72 object-cover mb-6" alt="Excited gif">
+          <p class="text-3xl font-bold text-[#d63384]">I love you, my Valentine! 😘</p>
+        </div>
+      `;
+      confetti();
+    });
+  </script>
+</body>
+</html>
